@@ -1,0 +1,52 @@
+{% set name = "stardist" %}
+{% set version = "0.8.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/stardist-{{ version }}.tar.gz
+  sha256: 260a31df86ca711e5e98cb91597c6cb9a10dcd1dc3c6b826d41b7c73c9646a1e
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.6
+    - setuptools >=40.8.0
+    - wheel
+    - oldest-supported-numpy
+    - numpy
+    - pip
+  run:
+    - python >=3.6
+    - csbdeep >=0.7.4
+    - scikit-image
+    - numba
+    - imageio
+
+test:
+  imports:
+    - stardist
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/stardist/stardist
+  summary: StarDist - Object Detection with Star-convex Shapes
+  license: BSD-3-Clause AND BSD-2-Clause AND BSD-3-Clause-LBNL AND MIT
+  license_file:
+    - LICENSE.txt
+    - stardist/lib/external/qhull_src/COPYING.txt
+    - stardist/lib/external/nanoflann/LICENSE.txt
+    - stardist/lib/external/clipper/LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - FloWuenne
