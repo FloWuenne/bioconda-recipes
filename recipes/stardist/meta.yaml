@@ -10,16 +10,19 @@ source:
   sha256: 260a31df86ca711e5e98cb91597c6cb9a10dcd1dc3c6b826d41b7c73c9646a1e
 
 build:
+  run_exports:
+    - {{ pin_subpackage('stardist', max_pin="x.x") }}
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
 requirements:
+  build:
+    - {{ compiler('c') }}
   host:
     - python >=3.6
     - setuptools >=40.8.0
     - wheel
-    - oldest-supported-numpy
     - numpy
     - pip
   run:
